@@ -6,6 +6,12 @@ require '../vendor/autoload.php';
 
 $input = explode("\r\n", file_get_contents('input.csv'));
 
+echo '<style>
+* {
+    box-sizing: border-box;
+}
+</style>';
+
 $formatedInputAsArray = [];
 foreach ($input as $line) {
     $formatedInputAsArray[] = explode(";", $line);
@@ -14,6 +20,9 @@ foreach ($input as $line) {
 $map = new Map($formatedInputAsArray);
 // $inputAdventurer = explode(';', explode("\r\n", file_get_contents('adventurer.csv'))[0]);
 // $map->placeAdventurer($inputAdventurer);
+echo 'Init map <br>';
 $map->renderMap();
+echo 'Execute adventurers movements <br><hr>';
 $map->executeMoves();
+echo 'Map after movements <br>';
 $map->renderMap();

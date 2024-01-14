@@ -55,11 +55,11 @@ class Cell
     {
         if ($this->adventurer) {
             $name = substr($this->adventurer->name, 0, 1);
-            echo "<div style='height: 40px;width: 40px;background-color:" . $this->color->value . ";line-height:40px;text-align:center;display:inline-block;margin:1px;'>" . $name . "</div>";
+            echo "<div style='height: 40px;width: 40px;background-color:" . $this->color->value . ";line-height:40px;text-align:center;margin:1px;display:inline-block;'>" . $name . "</div>";
             
             return;
         }
 
-        echo "<div style='height: 40px;width: 40px;background-color:" . $this->color->value . ";line-height:40px;text-align:center;display:inline-block;margin:1px;'></div>";
+        echo "<div style='height: 40px;width: 40px;background-color:" . $this->color->value . ";line-height:40px;text-align:center;margin:1px;display:inline-block;'></div>";
     }
 }
