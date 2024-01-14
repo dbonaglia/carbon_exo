@@ -15,24 +15,24 @@ class Map
     public function __construct(
         public array $input,
     ) {
-        $this->generate($input);
+        $this->generateBaseMap($input);
         $this->placeAdventurer($input);
     }
 
-    private function generate(array $input): void
+    private function generateBaseMap(array $input): void
     {
         foreach ($input as $line) {
             switch ($line[0]) {
                 case 'C':
                     $this->maxWidth = $line[1];
                     $this->maxHeight = $line[2];
-                    $this->generatePlains();
+                    $this->generateMapCells();
                 break;
             }
         }
     }
 
-    private function generatePlains(): void
+    private function generateMapCells(): void
     {
         for ($i=0;$i < $this->maxHeight;$i++) {
             for ($o=0;$o < $this->maxWidth;$o++) {
