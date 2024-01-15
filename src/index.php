@@ -6,11 +6,7 @@ require '../vendor/autoload.php';
 
 $input = explode("\r\n", file_get_contents('input.csv'));
 
-echo '<style>
-* {
-    box-sizing: border-box;
-}
-</style>';
+echo "<link href='styles.css' rel='stylesheet' />";
 
 $formatedInputAsArray = [];
 foreach ($input as $line) {

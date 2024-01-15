@@ -56,15 +56,17 @@ class Map
 
     public function renderMap()
     {
+        $width = (40*$this->maxWidth)+($this->maxWidth*2);
+        echo '<div id="container" style="width:' . $width . 'px;">';
+
         for ($i=0;$i < $this->maxHeight;$i++) {
             for ($o=0;$o < $this->maxWidth;$o++) {
                 $cell = $this->getCell($o, $i);
                 $cell->render();
             }
-            echo '<br>';
         }
 
-        echo '<br> <hr>';
+        echo '</div><br> <hr>';
     }
 
     private function getCell(int $x, int $y): ?Cell
