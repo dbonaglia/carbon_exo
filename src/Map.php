@@ -95,7 +95,7 @@ class Map
     {
         foreach ($input as $line) {
             if ($line[0] === 'A') {
-                $cell = $this->getCell($line[2], $line[2]);
+                $cell = $this->getCell($line[2], $line[3]);
                 if ($cell->type !== Types::Mountain) {
                     $cell->adventurer = new Adventurer(
                         $line[1],
