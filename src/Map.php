@@ -43,7 +43,13 @@ class Map
 
         foreach ($this->input as $line) {
             if ($line[0] === Types::Mountain->value || $line[0] === Types::Treasure->value) {
+
+                if ((int) $line[1] > $this->maxWidth || (int) $line[2] > $this->maxHeight) {
+                    throw new Exception('A cell should be placed in the grid.');
+                }
+
                 $cell = $this->getCell((int) $line[1],(int) $line[2]);
+                
                 if ($line[0] === Types::Treasure->value) {
                     $cell->setType(Types::from($line[0]), $line[3]);
                 } else {
@@ -76,6 +82,8 @@ class Map
                 return $cell;
             }
         }
+
+        return null;
     }
 
     private function setCell(Cell $inputCell): void
@@ -91,19 +99,22 @@ class Map
         }
     }
 
-    private function placeAdventurer(array $input): void
+    public function placeAdventurer(array $input): void
     {
         foreach ($input as $line) {
             if ($line[0] === 'A') {
                 $cell = $this->getCell($line[2], $line[3]);
-                if ($cell->type !== Types::Mountain) {
-                    $cell->adventurer = new Adventurer(
-                        $line[1],
-                        Orientation::from($line[4]),
-                        $line[2],
-                        $line[3]
-                    );
+
+                if ($cell->type === Types::Mountain) {
+                    throw new Exception("An adventurer can't be placed on a mountain.");
                 }
+
+                $cell->adventurer = new Adventurer(
+                    $line[1],
+                    Orientation::from($line[4]),
+                    $line[2],
+                    $line[3]
+                );
             }
         }
     }
@@ -146,43 +157,70 @@ class Map
                     switch ($adventurer->orientation) {
                         case Orientation::North:
                             $destinationCell = $this->getCell($adventurerCoords[0], $adventurerCoords[1]-1);
-                            if ($destinationCell->type !== Types::Mountain) {
-                                $adventurer->moveForward();
-                                $destinationCell->adventurer = $adventurer;
-                                $adventurer->getTreasure($destinationCell);
-                                $actualCell->adventurer = null;
+                            if (!$destinationCell) {
+                                throw new Exception ("An adventurer can not move out of the grid.");
                             }
+                            
+                            
+                            if ($destinationCell->type === Types::Mountain) {
+                                throw new Exception ("An adventurer can not move on a mountain.");
+                            }
+                            
+                            $adventurer->moveForward();
+                            $destinationCell->adventurer = $adventurer;
+                            $adventurer->getTreasure($destinationCell);
+                            $actualCell->adventurer = null;
                         break;
 
                         case Orientation::West:
                             $destinationCell = $this->getCell($adventurerCoords[0]+1, $adventurerCoords[1]);
-                            if ($destinationCell->type !== Types::Mountain) {
-                                $adventurer->moveForward();
-                                $destinationCell->adventurer = $adventurer;
-                                $adventurer->getTreasure($destinationCell);
-                                $actualCell->adventurer = null;
+                            if (!$destinationCell) {
+                                throw new Exception ("An adventurer can not move out of the grid.");
                             }
+                            
+                            
+                            if ($destinationCell->type === Types::Mountain) {
+                                throw new Exception ("An adventurer can not move on a mountain.");
+                            }
+                            
+                            $adventurer->moveForward();
+                            $destinationCell->adventurer = $adventurer;
+                            $adventurer->getTreasure($destinationCell);
+                            $actualCell->adventurer = null;
                         break;
 
                         case Orientation::South:
                             $destinationCell = $this->getCell($adventurerCoords[0], $adventurerCoords[1]+1);
-                            if ($destinationCell->type !== Types::Mountain) {
-                                $adventurer->moveForward();
-                                $destinationCell->adventurer = $adventurer;
-                                $adventurer->getTreasure($destinationCell);
-                                $actualCell->adventurer = null;
+                            if (!$destinationCell) {
+                                throw new Exception ("An adventurer can not move out of the grid.");
                             }
+                            
+                            
+                            if ($destinationCell->type === Types::Mountain) {
+                                throw new Exception ("An adventurer can not move on a mountain.");
+                            }
+                            
+                            $adventurer->moveForward();
+                            $destinationCell->adventurer = $adventurer;
+                            $adventurer->getTreasure($destinationCell);
+                            $actualCell->adventurer = null;
                         break;
 
                         case Orientation::East:
                             $destinationCell = $this->getCell($adventurerCoords[0]-1, $adventurerCoords[1]);
-                            if ($destinationCell->type !== Types::Mountain) {
-                                // $adventurer->moveForward($destinationCell);
-                                $adventurer->moveForward();
-                                $destinationCell->adventurer = $adventurer;
-                                $adventurer->getTreasure($destinationCell);
-                                $actualCell->adventurer = null;
+                            if (!$destinationCell) {
+                                throw new Exception ("An adventurer can not move out of the grid.");
                             }
+                            
+                            
+                            if ($destinationCell->type === Types::Mountain) {
+                                throw new Exception ("An adventurer can not move on a mountain.");
+                            }
+                            
+                            $adventurer->moveForward();
+                            $destinationCell->adventurer = $adventurer;
+                            $adventurer->getTreasure($destinationCell);
+                            $actualCell->adventurer = null;
                         break;
                     }
                 break;
