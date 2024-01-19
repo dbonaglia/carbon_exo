@@ -14,8 +14,6 @@ foreach ($input as $line) {
 }
 
 $map = new Map($formatedInputAsArray);
-// $inputAdventurer = explode(';', explode("\r\n", file_get_contents('adventurer.csv'))[0]);
-// $map->placeAdventurer($inputAdventurer);
 echo 'Init map <br>';
 $map->renderMap();
 echo 'Execute adventurers movements <br><hr>';
