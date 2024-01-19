@@ -11,6 +11,7 @@ class Map
     public int $maxWidth;
     public int $maxHeight;
     public array $cells = [];
+    public ?string $adventurerName = null;
 
     public function __construct(
         public array $input,
@@ -57,6 +58,10 @@ class Map
                 }
                 $this->setCell($cell);
             }
+
+            if ($line[0] === 'A') {
+                $this->adventurerName = $line[1];
+            }
         }
     }
 
@@ -73,6 +78,45 @@ class Map
         }
 
         echo '</div><br> <hr>';
+    }
+
+    public function renderMapAsFile()
+    {
+        $lines = [
+            ['C', $this->maxWidth, $this->maxHeight]
+        ];
+        
+        for ($i=0;$i < $this->maxHeight;$i++) {
+            for ($o=0;$o < $this->maxWidth;$o++) {
+                $cell = $this->getCell($o, $i);
+                switch ($cell->type) {
+                    case Types::Mountain:
+                        $lines[] = ['M', $cell->x, $cell->y];
+                    break;
+
+                    case Types::Treasure:
+                        $lines[] = ['T', $cell->x, $cell->y, $cell->treasures];
+                    break;
+                }
+            }
+        }
+
+        $adventurer = $this->getAdventurerByName($this->adventurerName);
+        $adventurerLine = [
+            'A',
+            $this->adventurerName,
+            $adventurer->xPosition,
+            $adventurer->yPosition,
+            $adventurer->orientation->value
+        ];
+
+        $lines[] = $adventurerLine;
+
+        $file = fopen('output.csv', 'w'); 
+        foreach($lines as $line) {
+            fputcsv($file, $line, ';');
+        }
+        fclose($file); 
     }
 
     private function getCell(int $x, int $y): ?Cell

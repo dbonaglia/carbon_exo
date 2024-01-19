@@ -22,3 +22,4 @@ echo 'Execute adventurers movements <br><hr>';
 $map->executeMoves();
 echo 'Map after movements <br>';
 $map->renderMap();
+$map->renderMapAsFile();
