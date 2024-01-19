@@ -4,7 +4,7 @@ use App\Map;
 
 require '../vendor/autoload.php';
 
-$input = explode("\r\n", file_get_contents('input.csv'));
+$input = explode("\r\n", file_get_contents('input1.csv'));
 
 echo "<link href='styles.css' rel='stylesheet' />";
 

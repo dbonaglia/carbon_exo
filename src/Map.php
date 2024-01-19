@@ -35,8 +35,8 @@ class Map
 
     private function generateMapCells(): void
     {
-        for ($i=0;$i < $this->maxHeight;$i++) {
-            for ($o=0;$o < $this->maxWidth;$o++) {
+        for ($i=0;$i <= $this->maxHeight;$i++) {
+            for ($o=0;$o <= $this->maxWidth;$o++) {
                 $cell = new Cell(Types::Plain, $o, $i);
                 $this->cells[] = $cell;
             }
@@ -50,10 +50,12 @@ class Map
                 }
 
                 $cell = $this->getCell((int) $line[1],(int) $line[2]);
+                // dump($cell);
                 
                 if ($line[0] === Types::Treasure->value) {
                     $cell->setType(Types::from($line[0]), $line[3]);
                 } else {
+                    // dump($line);
                     $cell->setType(Types::from($line[0]));
                 }
                 $this->setCell($cell);
@@ -85,7 +87,7 @@ class Map
         $lines = [
             ['C', $this->maxWidth, $this->maxHeight]
         ];
-        
+
         for ($i=0;$i < $this->maxHeight;$i++) {
             for ($o=0;$o < $this->maxWidth;$o++) {
                 $cell = $this->getCell($o, $i);
